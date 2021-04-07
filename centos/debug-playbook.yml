@@ -1,0 +1,23 @@
+- hosts: all
+  connection: local
+  gather_facts: True
+  tasks:
+  - name: who
+    local_action: "shell whoami"
+  - name: show
+    local_action: "shell echo {{ ansible_user }}@{{ ansible_ssh_host }}"
+  - name: show2
+    local_action: "shell echo {{ ansible_user }}@{{ inventory_hostname }}"
+  - debug: var=ansible_all_ipv4_addresses
+  - debug: var=ansible_default_ipv4.address
+  - debug: var=hostvars[inventory_hostname]['ansible_default_ipv4']['address']
+  - debug: var=hostvars[inventory_hostname]['ansible_default_ipv6']['address']
+  - debug: var=ansible_ssh_host
+  - debug: var=ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0])
+  - name: Find my public ip
+    uri: 
+      url: http://ifconfig.me/ip
+      return_content: yes
+    register: ip_response
+  - debug: var=ip_response.content
+  - debug: var=hostvars[inventory_hostname]
