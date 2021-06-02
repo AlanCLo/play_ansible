@@ -1,0 +1,9 @@
+---
+# defaults file for nginx
+sites:
+  webstatic:
+    frontend: 80
+    backend: 80
+  webapp:
+    frontend: 81
+    backend: 80

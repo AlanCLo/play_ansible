@@ -1,0 +1,11 @@
+---
+- name: Do control
+  import_playbook: playbooks/control.yml
+- name: Do database
+  import_playbook: playbooks/database.yml
+- name: Do static website
+  import_playbook: playbooks/static_website.yml
+- name: Do flask app
+  import_playbook: playbooks/flask_app.yml
+- name: Do load balancer
+  import_playbook: playbooks/loadbalancer.yml

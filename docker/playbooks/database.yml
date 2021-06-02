@@ -1,0 +1,8 @@
+---
+- hosts: database
+  roles:
+    - role: mysql
+      db_name: "{{ demo_db }}"
+      db_user: "{{ demo_username }}"
+      db_pass: "{{ demo_password }}"
+      db_host: "{{ demo_userhost }}"

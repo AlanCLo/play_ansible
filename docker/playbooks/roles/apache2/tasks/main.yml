@@ -1,0 +1,28 @@
+---
+# tasks file for apache2
+- name: Install web server deps
+  apt:
+    state: present
+    update_cache: true
+    pkg:
+      - apache2
+      - libapache2-mod-wsgi-py3
+      - python-pip
+      - python-virtualenv
+      - python-mysqldb
+      - curl
+      - git
+      - sqlite3
+  tags:
+    - packages
+
+- name: Ensure mod_wsgi enabled
+  apache2_module: state=present name=wsgi
+  notify: restart apache2
+  tags:
+    - config
+
+- name: Ensure apache
+  service: name=apache2 state=started enabled=yes
+  tags:
+    - services

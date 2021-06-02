@@ -1,0 +1,10 @@
+---
+- hosts: webapp
+  roles:
+    - apache2
+    - role: demo_app
+      app_db_type: "{{ demo_db_type }}"
+      app_db_address: "{{ groups.database[0] }}"
+      app_db_name: "{{ demo_db }}"
+      app_db_user: "{{ demo_username }}"
+      app_db_pass: "{{ demo_password }}"

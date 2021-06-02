@@ -1,0 +1,49 @@
+---
+# tasks file for demo_app
+- name: Copy demo app source
+  copy: src=app/ dest=/var/www/demo
+  tags:
+    - app
+
+- name: Configure app
+  template:
+    src: config.json.j2
+    dest: /var/www/demo/config.json
+  tags:
+    - app
+
+- name: Setup virtualenv
+  pip:
+    requirements: /var/www/demo/requirements.txt
+    virtualenv: /var/www/demo/.venv
+  tags:
+    - app
+
+- name: Migrate DB
+  shell:
+    chdir: /var/www/demo
+    cmd: sh ./init_db.sh
+  run_once: true
+  tags:
+    - app
+    - initdb
+
+- name: Apache demo conf
+  copy: src=demo.conf dest=/etc/apache2/sites-available mode=0755
+  tags:
+    - app
+
+- name: De-activate default apache site
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+  tags:
+    - app
+
+- name: Activate demo apache site
+  file:
+    src=/etc/apache2/sites-available/demo.conf
+    dest=/etc/apache2/sites-enabled/demo.conf
+    state=link
+  notify: restart apache2
+  tags:
+    - app
+

@@ -1,0 +1,44 @@
+---
+# tasks file for database
+- debug: var=db_name
+- debug: var=db_user
+- debug: var=db_host
+
+- name: Install mysql-server
+  apt:
+    state: present
+    update_cache: true
+    pkg:
+      - mysql-server
+      - python3-mysqldb
+  tags:
+    - packages
+
+- name: Ensure mysql listening
+  lineinfile:
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: ^bind-address
+    line: 'bind-address = 0.0.0.0'
+  notify: restart mysql
+  tags:
+    - config
+
+- name: Ensure mysql service
+  sysvinit: name=mysql state=started enabled=true
+  tags:
+    - services
+
+- name: create database
+  mysql_db: name={{ db_name }} state=present
+  tags:
+    - app
+
+- name: create demo user
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_pass }}"
+    priv: "{{ db_name }}.*:ALL"
+    host: "{{ db_host }}"
+    state: present
+  tags:
+    - app

@@ -1,0 +1,5 @@
+---
+- hosts: webstatic
+  roles:
+    - apache2
+    - demo_site

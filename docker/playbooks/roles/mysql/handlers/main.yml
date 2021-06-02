@@ -1,0 +1,4 @@
+---
+# handlers file for database
+- name: restart mysql
+  sysvinit: name=mysql state=restarted

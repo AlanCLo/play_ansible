@@ -1,0 +1,11 @@
+---
+# tasks file for control
+- name: Install Control Tools
+  apt:
+    state: present
+    update_cache: true
+    pkg:
+      - curl
+      - python-httplib2
+  tags:
+    - "packages"

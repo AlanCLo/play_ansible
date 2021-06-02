@@ -1,0 +1,39 @@
+---
+loadbalancer:
+  hosts:
+    lb01:
+      ansible_host: 192.168.99.100
+      ansible_user: root
+      ansible_port: 10021
+webstatic:
+  hosts:
+    static01:
+      ansible_host: 192.168.99.100
+      ansible_user: root
+      ansible_port: 10022
+    static02:
+      ansible_host: 192.168.99.100
+      ansible_user: root
+      ansible_port: 10023
+webapp:
+  hosts:
+    app01:
+      ansible_host: 192.168.99.100
+      ansible_user: root
+      ansible_port: 10024
+    app02:
+      ansible_host: 192.168.99.100
+      ansible_user: root
+      ansible_port: 10025
+database:
+  hosts:
+    db01:
+      ansible_host: 192.168.99.100
+      ansible_user: root
+      ansible_port: 10026
+controlgroup:
+  hosts:
+    control:
+      ansible_host: 192.168.99.100
+      ansible_user: root
+      ansible_port: 10027

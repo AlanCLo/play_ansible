@@ -1,0 +1,5 @@
+---
+# defaults file for database
+db_name: my_db
+db_user: my_user
+db_host: localhost

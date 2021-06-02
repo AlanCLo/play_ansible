@@ -1,0 +1,58 @@
+---
+- hosts: loadbalancer
+  gather_facts: false
+  tasks:
+    - name: verify nginx service
+      command: service nginx status
+      changed_when: false
+    - name: verify nginx is listening on 80
+      wait_for: port=80 timeout=1
+
+- hosts: webstatic
+  gather_facts: false
+  tasks:
+    - name: verify apache service
+      command: service apache2 status
+      changed_when: false
+    - name: verify apache is listening on 80
+      wait_for: port=80 timeout=1
+
+- hosts: webapp
+  gather_facts: false
+  tasks:
+    - name: verify apache service
+      command: service apache2 status
+      changed_when: false
+    - name: verify apache is listening on 80
+      wait_for: port=80 timeout=1
+
+- hosts: database
+  gather_facts: false
+  tasks:
+    - name: verify mysql service
+      command: service mysql status
+      changed_when: false
+    - name: verify mysql is listening on 3306
+      wait_for: port=3306 timeout=1
+
+- hosts: control
+  gather_facts: false
+  tasks:
+    - name: verify response
+      uri: url=http://{{item}} return_content=yes
+      with_items: "{{groups.loadbalancer}}"
+      register: lb_index
+    - fail: msg="index failed to return content"
+      when: "'Hello' not in item.content"
+      with_items: "{{lb_index.results}}"
+
+- hosts: loadbalancer
+  gather_facts: false
+  tasks:
+    - name: verify backend response
+      uri: url=http://{{item}} return_content=yes
+      with_items: "{{groups.webstatic}}"
+      register: web_index
+    - fail: msg="index failed to return content"
+      when: "'Hello' not in item.content"
+      with_items: "{{web_index.results}}"

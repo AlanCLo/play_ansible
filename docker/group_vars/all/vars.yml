@@ -1,0 +1,6 @@
+---
+demo_db_type: mysql+pymysql
+demo_db: demo
+demo_username: demo
+demo_password: "{{vault_db_password}}"
+demo_userhost: '%'

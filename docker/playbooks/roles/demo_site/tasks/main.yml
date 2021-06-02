@@ -1,0 +1,7 @@
+---
+# tasks file for demo_site
+- name: Copy index.html
+  template: src=demo.index.html.j2 dest=/var/www/html/index.html mode=0755
+  notify: restart apache2
+  tags:
+    - config
