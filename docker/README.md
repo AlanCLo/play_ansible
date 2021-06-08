@@ -49,7 +49,7 @@ A local file `key.pub` will be baked into the image for access.
 cp ~/.ssh/<pick a .pub key> key.pub
 
 # Build container image
-docker build -t local:ansibletarget .
+docker build -t local/ansibletarget .
 ```
 
 ### 1.3. Spin up infrastructure

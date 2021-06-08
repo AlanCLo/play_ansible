@@ -3,7 +3,7 @@ version: "3.9"
 services:
   lb01:
     container_name: lb01
-    image: local:ansibletarget
+    image: local/ansibletarget
     ports:
       - "10021:22"
       - "9080:80"
@@ -11,38 +11,38 @@ services:
 
   static01:
     container_name: static01
-    image: local:ansibletarget
+    image: local/ansibletarget
     ports:
       - "10022:22"
 
   static02:
     container_name: static02
-    image: local:ansibletarget
+    image: local/ansibletarget
     ports:
       - "10023:22"
 
   app01:
     container_name: app01
-    image: local:ansibletarget
+    image: local/ansibletarget
     ports:
       - "10024:22"
 
   app02:
     container_name: app02
-    image: local:ansibletarget
+    image: local/ansibletarget
     ports:
       - "10025:22"
 
   db01:
     container_name: db01
-    image: local:ansibletarget
+    image: local/ansibletarget
     ports:
       - "10026:22"
       - "13306:3306"
 
   control:
     container_name: control
-    image: local:ansibletarget
+    image: local/ansibletarget
     ports:
       - "10027:22"
 
